@@ -1,13 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import Feather from "react-native-vector-icons/Feather";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 export default function App() {
   const [coins, setCoins] = useState([]);
 
   const loadData = async () => {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1&sparkline=false"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=15&page=1&sparkline=false"
     );
     const data = await response.json();
     setCoins(data);
@@ -32,30 +34,55 @@ export default function App() {
                 <View>
                   <Text style={styles.title}>{item.name}</Text>
                   <View style={{ flexDirection: "row" }}>
+                    <View style= {styles.rankContainer}>
+
+                    <Text style={styles.rank}>{item.market_cap_rank}</Text>
+                    </View>
                     <Text style={styles.text}>{item.symbol.toUpperCase()}</Text>
-                    <Text style={styles.text}>
-                      {item.price_change_percentage_24h.toFixed(2)}%
+                    <MaterialIcons
+                      name={
+                        item.price_change_percentage_24h >= 0
+                          ? "arrow-drop-up"
+                          : "arrow-drop-down"
+                      }
+                      size={20}
+                      color={
+                        item.price_change_percentage_24h >= 0
+                          ? "#4ADE80"
+                          : "#F87171"
+                      }
+                    />
+
+                    <Text
+                      style={[
+                        styles.text,
+                        {
+                          color:
+                            item.price_change_percentage_24h < 0
+                              ? "#F87171"
+                              : "#4ADE80",
+                        },
+                      ]}
+                    >
+                      {item.price_change_percentage_24h.toFixed(2)} %
                     </Text>
                   </View>
                 </View>
 
-                <View>
-              <Text style={styles.title}>
-                {item.current_price.toLocaleString("en-US")} USD 
-              </Text>
-              <Text style={styles.text}>
-                {item.market_cap_change_percentage_24h.toFixed(2)}%
-              </Text>
-            </View>
+                <View style={{ marginLeft: "auto", alignItems: "flex-end" }}>
+                  <Text style={styles.title}>
+                    {item.current_price.toLocaleString("en-US")} US$
+                  </Text>
+                  <Text style={styles.text}>
+                    {item.market_cap_change_percentage_24h.toFixed(2)} %
+                  </Text>
+                </View>
               </View>
-
-           
-
             </View>
-            
           );
         }}
       ></FlatList>
+      <StatusBar style="light" />
     </View>
   );
 }
@@ -63,14 +90,17 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121212",
+    //backgroundColor: "#121212",
+    backgroundColor: "#1C1B2D",
     paddingTop: 50,
   },
 
   title: {
-    color: "#fff",
+    // color: "#fff",
+    color: "#EDEDED",
     fontSize: 16,
     fontWeight: "bold",
+    marginBottom: 3,
   },
   text: {
     color: "#fff",
@@ -79,7 +109,22 @@ const styles = StyleSheet.create({
   coinContainer: {
     flexDirection: "row",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "#282828",
+    borderBottomColor: "#A29CCF",
     padding: 15,
+    backgroundColor: "	#2A263A",
+    alignItems: "center",
   },
+  rank:{
+    fontWeight: "bold",
+    color: "#EDEDED",
+   
+    
+  },
+  rankContainer:{
+    marginRight: 5,
+    backgroundColor: "#7C3AED",
+    paddingHorizontal: 5,
+    borderRadius: 5,
+    
+  }
 });
