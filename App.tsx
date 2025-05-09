@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { StyleSheet, Text, View, FlatList, Image } from "react-native";
 import Feather from "react-native-vector-icons/Feather";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Header } from "./components/Header";
+import { NavigationContainer } from "@react-navigation/native";
+import Navigation from "./navigation/navigation"; // Import the function navigation
 
 export default function App() {
   const [coins, setCoins] = useState([]);
@@ -19,71 +22,12 @@ export default function App() {
     loadData();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={coins}
-        renderItem={({ item }) => {
-          return (
-            <View style={styles.container}>
-              <View style={styles.coinContainer}>
-                <Image
-                  source={{ uri: item.image }}
-                  style={{ width: 30, height: 30, marginRight: 10 }}
-                />
-                <View>
-                  <Text style={styles.title}>{item.name}</Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <View style= {styles.rankContainer}>
-
-                    <Text style={styles.rank}>{item.market_cap_rank}</Text>
-                    </View>
-                    <Text style={styles.text}>{item.symbol.toUpperCase()}</Text>
-                    <MaterialIcons
-                      name={
-                        item.price_change_percentage_24h >= 0
-                          ? "arrow-drop-up"
-                          : "arrow-drop-down"
-                      }
-                      size={20}
-                      color={
-                        item.price_change_percentage_24h >= 0
-                          ? "#4ADE80"
-                          : "#F87171"
-                      }
-                    />
-
-                    <Text
-                      style={[
-                        styles.text,
-                        {
-                          color:
-                            item.price_change_percentage_24h < 0
-                              ? "#F87171"
-                              : "#4ADE80",
-                        },
-                      ]}
-                    >
-                      {item.price_change_percentage_24h.toFixed(2)} %
-                    </Text>
-                  </View>
-                </View>
-
-                <View style={{ marginLeft: "auto", alignItems: "flex-end" }}>
-                  <Text style={styles.title}>
-                    {item.current_price.toLocaleString("en-US")} US$
-                  </Text>
-                  <Text style={styles.text}>
-                    {item.market_cap_change_percentage_24h.toFixed(2)} %
-                  </Text>
-                </View>
-              </View>
-            </View>
-          );
-        }}
-      ></FlatList>
+  return ( 
+   <>
+      <Navigation />
       <StatusBar style="light" />
-    </View>
+    </>
+   
   );
 }
 
@@ -92,7 +36,7 @@ const styles = StyleSheet.create({
     flex: 1,
     //backgroundColor: "#121212",
     backgroundColor: "#1C1B2D",
-    paddingTop: 50,
+    
   },
 
   title: {
