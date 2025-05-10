@@ -24,13 +24,13 @@ function MyTabs() {
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
-            backgroundColor: '#5B2A8C'
+            backgroundColor: '#4A247C'
           },
           android:{
-            backgroundColor: '#5B2A8C'
+            backgroundColor: '#4A247C'
           },
           default: {
-            backgroundColor: '#5B2A8C'
+            backgroundColor: '#1F0E3D',
           },
         }),
             headerShown: false,

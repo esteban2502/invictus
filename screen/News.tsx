@@ -1,12 +1,24 @@
 import { View,Text } from "react-native";
 import react from "react";
-import { Header } from "../components/Header";
+import NewsItem from '../components/Cards'
 
 export default function News() {
     return(
         
         <View>
-            <Header title="" />
+            <NewsItem 
+            title="Bitcoin Hits New All-Time High" 
+            description="Bitcoin has reached a new all-time high"
+            />  
+            <NewsItem 
+            title="Bitcoin Hits New All-Time High" 
+            description="Bitcoin has reached a new all-time high"
+            />
+            <NewsItem 
+            title="Bitcoin Hits New All-Time High" 
+            description="Bitcoin has reached a new all-time high"
+            />    
+            
         </View>
     );
 }
