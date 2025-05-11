@@ -4,14 +4,19 @@ import { StyleSheet, View, FlatList, Text, Image } from "react-native";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Header } from "../components/Header";
+import { TextInput } from "react-native-gesture-handler";
 
 
 export default function CoinsList() {
   const [coins, setCoins] = useState([]);
+  const [search, setSearch] = useState("");
+  const [refresh, seRefresh] = useState(false);
+
+
 
   const loadData = async () => {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=15&page=1&sparkline=false"
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=1&sparkline=false"
     );
     const data = await response.json();
     setCoins(data);
@@ -24,8 +29,31 @@ export default function CoinsList() {
   return (
     <View style={styles.container}>
     <Header title=""/>
+      <View style={styles.inputContainer}>
+        <TextInput
+        style={styles.searchInput}
+        placeholder="Search"
+        placeholderTextColor="#D6C3FF"
+        onChangeText={text => setSearch(text)}/>
+        <MaterialIcons
+          name="search"
+          size={24}
+          color="#7C3AED"
+          style={styles.searchIcon}
+        />
+      </View>
+
       <FlatList
-        data={coins}
+       refreshing={refresh}
+       onRefresh={async () =>{
+        seRefresh(true);
+        await loadData();
+        seRefresh(false);
+       } }
+        showsVerticalScrollIndicator={false}
+        data={
+          coins.filter(coin => coin.name.toLowerCase().includes(search.toLowerCase()) || coin.symbol.toLowerCase().includes(search.toLowerCase())) 
+        }
         renderItem={({ item }) => {
           return (
             <View style={styles.container}>
@@ -97,6 +125,23 @@ const styles = StyleSheet.create({
     backgroundColor: "#1C1B2D",
 
   },
+   inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#D6C3FF",
+    marginHorizontal: 7,
+    marginTop: 10
+  },
+
+  searchInput:{
+    color: "#fff",
+    padding: 10,
+   
+    flex: 1,
+
+  },
 
   title: {
     // color: "#fff",
@@ -129,5 +174,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     borderRadius: 5,
     
+  },searchIcon: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+    zIndex: 1,
+    color: "#D6C3FF",
   }
 });

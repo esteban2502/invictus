@@ -1,16 +1,13 @@
 import react from 'react';
 import { View, Text, StyleSheet, Image } from "react-native";
 
-type NewsProps = {
-  title: string;
-  description: string;
-};
 
-const NewsItem: React.FC<NewsProps> = ({ title, description }) => {
+
+export default function NewsItem(props) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
+      <Text style={styles.title}>{props.title}</Text>
+      <Text style={styles.description}>{props.description}</Text>
     </View>
   );
 };
@@ -42,5 +39,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default NewsItem;

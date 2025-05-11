@@ -6,26 +6,17 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Header } from "./components/Header";
 import { NavigationContainer } from "@react-navigation/native";
 import Navigation from "./navigation/navigation"; // Import the function navigation
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 
 export default function App() {
-  const [coins, setCoins] = useState([]);
-
-  const loadData = async () => {
-    const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=15&page=1&sparkline=false"
-    );
-    const data = await response.json();
-    setCoins(data);
-  };
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
+  
   return ( 
    <>
+   <GestureHandlerRootView style={{ flex: 1 }}>
       <Navigation />
       <StatusBar style="light" />
+    </GestureHandlerRootView>  
     </>
    
   );
