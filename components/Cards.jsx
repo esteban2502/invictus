@@ -1,41 +1,69 @@
 import react from 'react';
-import { View, Text, StyleSheet, Image } from "react-native";
-
-
+import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 
 export default function NewsItem(props) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{props.title}</Text>
-      <Text style={styles.description}>{props.description}</Text>
-    </View>
+    <TouchableOpacity style={styles.button} onPress={props.onPress}>
+      <View style={styles.container}>
+        <Image
+          style={styles.image}
+          source={{ uri: props.imageUrl }}
+          resizeMode="cover"
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.title} numberOfLines={3}>{props.title}</Text>
+          <Text style={styles.description} numberOfLines={3}>{props.description}</Text>
+        </View>
+        {/* ELIMINAMOS ESTA LÍNEA */}
+        {/* <Text style={styles.buttonText}>Ver más</Text> */}
+      </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: 15,
-    backgroundColor: '#31175E', // Tu tono elegante
-    borderRadius: 30,
+  button: {
+    backgroundColor: '#1E1D30',
+    borderRadius: 10,
     marginBottom: 15,
+    padding: 15,
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   image: {
-    width: '100%',
-    height: 150,
+    width: 120,
+    height: 100,
     borderRadius: 8,
+    marginRight: 15,
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
-    marginTop: 10,
+    marginBottom: 5,
   },
   description: {
-    fontSize: 14,
-    color: '#C4A560', // Acento dorado
-    marginTop: 5,
+    fontSize: 12,
+    color: '#FFFFFF',
+    marginBottom: 10,
+    maxHeight: 60, // Ajusta este valor según la altura máxima que desees (en puntos)
+    overflow: 'hidden', // Oculta el texto que excede la maxHeight
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    fontSize: 12,
     textAlign: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    backgroundColor: '#44415E',
+    marginLeft: 15,
   },
 });
