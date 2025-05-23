@@ -55,6 +55,7 @@ function MyTabs() {
         }}
         
       />
+      
     </Tab.Navigator>
     </>
   );
