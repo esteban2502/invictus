@@ -3,10 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6'; //News Icon
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5'; //Coins Icon
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'; //Converter Icon
 
 // Importa las pantallas
 import News from "../screen/News";
 import CoinsList from "../screen/Coins"; // Nueva pantalla
+import Converter from "../screen/Converter";
 import { Platform } from "react-native";
 
 const Tab = createBottomTabNavigator();
@@ -55,7 +57,13 @@ function MyTabs() {
         }}
         
       />
-      
+      <Tab.Screen
+        name="Converter"
+        component={Converter}
+        options={{
+            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" />
+        }}
+      />
     </Tab.Navigator>
     </>
   );
