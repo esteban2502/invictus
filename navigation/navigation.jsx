@@ -22,14 +22,15 @@ function MyTabs() {
         initialRouteName="Coins"
         screenOptions={{
             tabBarActiveTintColor: "#7C3AED",
+            tabBarShowLabel: false,
             tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: 'absolute',
-            backgroundColor: '#4A247C'
+            backgroundColor: '#1F0E3D'
           },
           android:{
-            backgroundColor: '#4A247C'
+            backgroundColor: '#1F0E3D'
           },
           default: {
             backgroundColor: '#1F0E3D',
@@ -45,7 +46,7 @@ function MyTabs() {
         component={News}
         options={{
        
-          tabBarIcon: ({ color }) => <FontAwesome6 name="newspaper" size={24} color="white" />,
+          tabBarIcon: ({ color }) => <FontAwesome6 name="newspaper" size={24} color="white" style={{marginTop: '12px'}}  />,
         }}
         
       />
@@ -53,7 +54,7 @@ function MyTabs() {
         name="Coins"
         component={CoinsList}
         options={{
-            tabBarIcon: ({ color}) => <FontAwesome5 name="bitcoin" size={24} color="white" />
+            tabBarIcon: ({ color}) => <FontAwesome5 name="bitcoin" size={24} color="white" style={{marginTop: '12px'}}  />
         }}
         
       />
@@ -61,7 +62,7 @@ function MyTabs() {
         name="Converter"
         component={Converter}
         options={{
-            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" />
+            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" style={{marginTop: '12px'}} />
         }}
       />
     </Tab.Navigator>
