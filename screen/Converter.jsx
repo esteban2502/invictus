@@ -5,21 +5,40 @@ import { Header } from '../components/Header';
 
 const Converter = () => {
     const [amount, setAmount] = useState(''); //We first declare the state empty
-    const [selectedCrypto, setSelectedCrypto] = useState('bitcoin'); //State variable for the selected crypto
+    const [selectedCrypto, setSelectedCrypto] = useState('bitcoin'); //Bitcoin is the default crypto
     const [cryptoPrice, setCryptoPrice] = useState(0); //State variable for the currentcrypto price
     const [result, setResult] = useState(0); //Here we set the result of the convertsion
     const [cryptoList, setCryptoList] = useState([]); //Here are the list of the crypto
+    const [cryptoPrices, setCryptoPrices] = useState({}); //Store all crypto prices
 
   useEffect(() => {
     fetchCryptoPrices(); //This is the function that fetches the crypto prices for the first and only time
   }, []);
 
+  useEffect(() => {
+    // We update the crypto price when the selected crypto changes
+    if (cryptoPrices[selectedCrypto]) {
+      setCryptoPrice(cryptoPrices[selectedCrypto]);
+    }
+  }, [selectedCrypto, cryptoPrices]);
+
   const fetchCryptoPrices = async () => {
     try {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,dogecoin,cardano&vs_currencies=usd');
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,dogecoin,cardano,tether,xrp,bnb,solana,usdc,tron,steth,wbtc,hype,wsteth,bitcoin-cash,leo,chainlink,stellar,usds&vs_currencies=usd');
       const data = await response.json();
       setCryptoList(Object.keys(data)); //This is to extract the keys from the data
-      setCryptoPrice(data[selectedCrypto]?.usd || 0); //This is to set the crypto price
+      
+      // Store all prices in a separate state
+      const prices = {};
+      Object.keys(data).forEach(crypto => {
+        prices[crypto] = data[crypto].usd;
+      });
+      setCryptoPrices(prices);
+      
+      // Set initial price for selected crypto
+      if (data[selectedCrypto]) {
+        setCryptoPrice(data[selectedCrypto].usd);
+      }
     } catch (error) {
       console.error('Error fetching crypto prices:', error);
     }
@@ -27,8 +46,20 @@ const Converter = () => {
 
   //This function is executed when the user clicks the convert button
   const handleConvert = () => {
-    const calculatedResult = parseFloat(amount) * cryptoPrice; //We converted the String, and made the calculation
-    setResult(calculatedResult); //Set the result in the state variable "result"
+    if (amount && cryptoPrice > 0) {
+      const calculatedResult = parseFloat(amount) * cryptoPrice; //We converted the String, and made the calculation
+      setResult(calculatedResult); //Set the result in the state variable "result"
+    }
+  }
+
+  const handleCryptoChange = (itemValue) => {
+    setSelectedCrypto(itemValue); //Set the selected value to the state variable "selectedCrypto"
+    setResult(0); // Reset result when changing crypto
+  }
+
+  const handleAmountChange = (text) => {
+    setAmount(text); // Update amount
+    setResult(0); // This reset the result when the amount changes
   }
 
   return (
@@ -41,7 +72,7 @@ const Converter = () => {
           <TextInput //Next all the attributes of the input
             style={styles.searchInput}
             value={amount}
-            onChangeText={setAmount} //The input changes the state variable "amount"
+            onChangeText={handleAmountChange} //The input changes the state variable "amount"
             keyboardType="numeric" //The input is a number
             placeholder="Enter amount"
             placeholderTextColor="#FFFFFF"
@@ -52,10 +83,7 @@ const Converter = () => {
           <Text style={styles.label}>Select Cryptocurrency</Text>
           <Picker
             selectedValue={selectedCrypto} //The selected value is the state variable "selectedCrypto"
-            onValueChange={(itemValue) => {
-              setSelectedCrypto(itemValue); //Set the selected value to the state variable "selectedCrypto"
-              fetchCryptoPrices(); //Call the function to fetch the crypto prices again
-            }}
+            onValueChange={handleCryptoChange}
             style={styles.picker}
           >
             {/* This is the list of the crypto, it itterates through the cryptoList with its key and value */}
@@ -64,6 +92,15 @@ const Converter = () => {
             ))}
           </Picker>
         </View>
+
+        {/* Show current price */}
+        {cryptoPrice > 0 && (
+          <View style={styles.priceContainer}>
+            <Text style={styles.currentPriceText}>
+              Current {selectedCrypto.toUpperCase()} price: ${cryptoPrice.toFixed(2)} USD
+            </Text>
+          </View>
+        )}
 
         {/* It calls the funtion to convert the crypto to USD */}
         <TouchableOpacity style={styles.button} onPress={handleConvert}>
@@ -168,6 +205,15 @@ const styles = StyleSheet.create({
     color: "#D6C3FF", 
     fontSize: 16,
     textAlign: "center",
+  },
+  priceContainer: {
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: "#2A263A",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#D6C3FF",
+    alignItems: "center",
   },
 });
 
