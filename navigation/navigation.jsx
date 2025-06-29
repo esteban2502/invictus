@@ -46,15 +46,26 @@ function MyTabs() {
         component={News}
         options={{
        
-          tabBarIcon: ({ color }) => <FontAwesome6 name="newspaper" size={24} color="white" style={{marginTop: '12px'}}  />,
+          tabBarIcon: ({ color }) => <FontAwesome6 name="newspaper" size={24} color="white" style={{marginTop: '10px'}}  />,
         }}
         
       />
+    <Tab.Screen
+        name="chat"
+        component={News}
+        options={{
+       
+          tabBarIcon: ({ color }) => <MaterialIcons name="chat-bubble-outline" size={24} color="white" style={{marginTop: '10px'}}  />,
+        }}
+        
+      />
+
+
       <Tab.Screen
         name="Coins"
         component={CoinsList}
         options={{
-            tabBarIcon: ({ color}) => <FontAwesome5 name="bitcoin" size={24} color="white" style={{marginTop: '12px'}}  />
+            tabBarIcon: ({ color}) => <FontAwesome5 name="bitcoin" size={24} color="white" style={{marginTop: '10px'}}  />
         }}
         
       />
@@ -62,7 +73,7 @@ function MyTabs() {
         name="Converter"
         component={Converter}
         options={{
-            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" style={{marginTop: '12px'}} />
+            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" style={{marginTop: '10px'}} />
         }}
       />
     </Tab.Navigator>
