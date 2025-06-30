@@ -30,17 +30,18 @@ export default function CoinsList() {
     <View style={styles.container}>
     <Header title=""/>
       <View style={styles.inputContainer}>
-        <TextInput
-        style={styles.searchInput}
-        placeholder="Search"
-        placeholderTextColor="#D6C3FF"
-        onChangeText={text => setSearch(text)}/>
         <MaterialIcons
           name="search"
           size={24}
           color="#7C3AED"
           style={styles.searchIcon}
         />
+        <TextInput
+        style={styles.searchInput}
+        placeholder="Search"
+        placeholderTextColor="#D6C3FF"
+        onChangeText={text => setSearch(text)}/>
+        
       </View>
 
       <FlatList
@@ -175,9 +176,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     
   },searchIcon: {
-    position: "absolute",
-    right: 10,
-    top: 10,
+    marginLeft: 8,
+  marginRight: 8,
     zIndex: 1,
     color: "#D6C3FF",
   }

@@ -10,6 +10,8 @@ import News from "../screen/News";
 import CoinsList from "../screen/Coins"; // Nueva pantalla
 import Converter from "../screen/Converter";
 import { Platform } from "react-native";
+import Chat from "../components/Chat";
+import ChatUI from "../screen/ChatIU";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,16 +48,16 @@ function MyTabs() {
         component={News}
         options={{
        
-          tabBarIcon: ({ color }) => <FontAwesome6 name="newspaper" size={24} color="white" style={{marginTop: '10px'}}  />,
+          tabBarIcon: ({ color }) => <FontAwesome6 name="newspaper" size={24} color="white" style={{marginTop: '12px'}}  />,
         }}
         
       />
     <Tab.Screen
         name="chat"
-        component={News}
+        component={ChatUI}
         options={{
        
-          tabBarIcon: ({ color }) => <MaterialIcons name="chat-bubble-outline" size={24} color="white" style={{marginTop: '10px'}}  />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="chat-bubble-outline" size={24} color="white" style={{marginTop: '12px'}}  />,
         }}
         
       />
@@ -65,7 +67,7 @@ function MyTabs() {
         name="Coins"
         component={CoinsList}
         options={{
-            tabBarIcon: ({ color}) => <FontAwesome5 name="bitcoin" size={24} color="white" style={{marginTop: '10px'}}  />
+            tabBarIcon: ({ color}) => <FontAwesome5 name="bitcoin" size={24} color="white" style={{marginTop: '12px'}}  />
         }}
         
       />
@@ -73,7 +75,7 @@ function MyTabs() {
         name="Converter"
         component={Converter}
         options={{
-            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" style={{marginTop: '10px'}} />
+            tabBarIcon: ({ color }) => <MaterialIcons name="currency-exchange" size={24} color="white" style={{marginTop: '12px'}} />
         }}
       />
     </Tab.Navigator>
